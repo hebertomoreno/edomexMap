@@ -75,7 +75,9 @@ d3.csv("csv/munzip.csv", function(data){
 			.style("stroke-width","1")
 			.style("fill","red")
 			.on("click", function(d){
-				var newWindow = window.open('');
+				var newWindow;
+				newWindow.close()
+				newWindow = window.open('','name','height=700,width=150');
 
 				var newWindowRoot = d3.select(newWindow.document.body);
 
@@ -85,7 +87,7 @@ d3.csv("csv/munzip.csv", function(data){
 
 				var list = newWindowRoot.append("ul");
 				var cpList = list.selectAll("li")
-							.data(data);
+							.data(zippy);
 				cpList.attr("class", "update");
 
 				cpList.enter()
@@ -93,9 +95,7 @@ d3.csv("csv/munzip.csv", function(data){
 					.attr("class", "enter")
 					.merge(cpList)
 					.text(function(d){return d;});
-				cpList.exit().remove();
-				
-				
+				cpList.exit().remove();				
 			})
 			.on("mouseover", function(d){
 				//Nothing Yet
