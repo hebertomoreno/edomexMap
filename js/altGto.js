@@ -75,11 +75,26 @@ d3.csv("csv/munzip.csv", function(data){
 			.style("stroke-width","1")
 			.style("fill","red")
 			.on("click", function(d){
-				var munName = d3.select(".info")
-								.selectAll("h1")
+				var newWindow = window.open('');
+
+				var newWindowRoot = d3.select(newWindow.document.body);
+
+				var munName = newWindowRoot.append("h1")
 								.text(checkDolores(d.properties.NOMBRE));
 				var zippy = d.properties.zipcodes.split(",");
-				updateData(zippy);
+
+				var list = newWindowRoot.append("ul");
+				var cpList = list.selectAll("li")
+							.data(data);
+				cpList.attr("class", "update");
+
+				cpList.enter()
+					.append("li")
+					.attr("class", "enter")
+					.merge(cpList)
+					.text(function(d){return d;});
+				cpList.exit().remove();
+				
 				
 			})
 			.on("mouseover", function(d){
